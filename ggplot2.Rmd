@@ -9,6 +9,7 @@ output: html_document
 
 ```{r, echo = FALSE}
 library(tidyverse)
+library(ggthemes)
 x <- 4
 ```
 
@@ -29,5 +30,24 @@ ggplot(mpg, aes(x=hwy, y=cty, color=fl, size=class)) +geom_point()
 
 ```{r}
 ggplot(mpg, aes(x = displ, y=hwy)) + geom_point(alpha=0.4, color="blue")
+```
+
+```{r}
+ggplot(mpg, aes(x=displ, y=hwy, color=class)) + geom_point() +
+  facet_wrap( ~ manufacturer, scales="free", nrow=3) +scale_y_continuous(trans="log") + theme_economist()
+```
+```{r}
+ggplot(mpg, aes(x=drv, y=hwy)) +
+  geom_violin()
+```
+
+```{r}
+mytheme <- theme_bw()
+ggplot(mpg, aes(x=displ, y=hwy)) + geom_point() + geom_smooth(method="lm") + labs(title="Relationship between Engine Size and highway mileage (MPG)", x = "Engine size (liters displaced)", y = "Highway Mileage (miles per gallon)") + theme(text=element_text(size=16))
+```
+
+```{r}
+myplot <- ggplot(mpg, aes(x = fl, fill=class)) + geom_bar(position = "dodge")
+ggsave("example_plot.png", plot=myplot, width=15, height=15, units="cm")
 ```
 
